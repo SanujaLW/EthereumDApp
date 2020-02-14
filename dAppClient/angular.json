@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "dAppClient": {
@@ -94,7 +94,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           }
         },
         "lint": {
@@ -123,6 +126,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "dAppClient"
+    }
+  },
+  "defaultProject": "dAppClient",
+  "cli": {
+    "analytics": "e1cb1fa2-a3d3-4180-8431-4e602fb50b14"
+  }
 }
