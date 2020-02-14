@@ -4,7 +4,8 @@ import { IndexComponent } from './index.component';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: IndexComponent }
+  { path: '', pathMatch: 'full', component: IndexComponent },
+  { path: 'dApp', loadChildren: () => import('./d-app/d-app.module').then(m => m.DAppModule) }
 ];
 
 @NgModule({
