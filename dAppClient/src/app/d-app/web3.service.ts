@@ -10,7 +10,13 @@ export class Web3Service {
 
   private web3: any;
 
-  constructor() { }
+  constructor() { 
+    this.init().then((result)=>{
+      if(result === false){
+        console.log("No wallet detected");
+      }
+    });
+  }
 
   async init(){
     let _etheruem = (window as any).ethereum;
@@ -23,7 +29,15 @@ export class Web3Service {
   }
 
   getContract(data: SmartContract){
-    return new this.web3.eth.Contract(data.abi, data.address);
+    if(this.web3 !== undefined){
+      return new this.web3.eth.Contract(data.abi, data.address);
+    }
+  }
+
+  getAddresses(){
+    if(this.web3 !== undefined){
+      return this.web3.eth.getAccounts();
+    }
   }
 
   

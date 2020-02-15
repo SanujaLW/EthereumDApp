@@ -1,9 +1,6 @@
 <div class="container d-flex flex-column aling-items-center">
     <h2>Number Get Set</h2>
     <h4>Current value: {{value}}</h4>
-    <button class="btn btn-success">Get</button>
-    <div class="d-flex">
-        <button class="btn btn-success">Set</button>
-        <input type="text">
-    </div>
+    <button class="btn btn-success" (click)='getValue()'>Get</button>
+    <button class="btn btn-success" (click)='setValue()'>Set</button>
 </div>
