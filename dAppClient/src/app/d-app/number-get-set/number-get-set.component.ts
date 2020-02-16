@@ -1,4 +1,4 @@
-import { Web3Service } from './../web3.service';
+import { Web3Service } from './../services/web3.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -48,7 +48,7 @@ export class NumberGetSetComponent implements OnInit {
     ];
     let address = '0xBEafd79cf8DbB2317b00cF2a39c99f5535c65089';
     let name = 'NumberGetSet';
-    this.contract = web3.getContract({name,address, abi});
+    this.contract = web3.getContract({name,address,abi});
     web3.getAddresses().then(data=>{
       if(data !== undefined){
         this.account = data[0];
@@ -70,7 +70,9 @@ export class NumberGetSetComponent implements OnInit {
   setValue(){
     if(this.account !== undefined && this.contract !== undefined){
       let newValue = prompt("Enter new value");
-      this.contract.methods.setValue(newValue).send({from: this.account});
+      if(newValue){
+        this.contract.methods.setValue(newValue).send({from: this.account});
+      }
     }
   }
 

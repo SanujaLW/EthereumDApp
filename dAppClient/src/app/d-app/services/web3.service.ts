@@ -1,7 +1,6 @@
-import { SmartContract } from './smart-contract';
+import { SmartContract } from './../types/smart-contract';
 import { Injectable } from '@angular/core';
 import Web3 from 'web3';
-import { promisify } from 'util';
 
 @Injectable({
   providedIn: 'root'
