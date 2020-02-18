@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Web3Service } from './services/web3.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-d-app',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DAppComponent implements OnInit {
 
-  constructor() { }
+  private web3Serv: any;
+  private router: Router;
+  
+  constructor(web3:Web3Service, router: Router) {
+    this.web3Serv = web3;
+    this.router = router;
+   }
 
   ngOnInit(): void {
+  }
+
+  logout(){
+    this.web3Serv.logout();
+    this.router.navigate(['']);
   }
 
 }

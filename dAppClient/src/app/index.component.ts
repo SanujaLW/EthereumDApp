@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Web3Service } from './d-app/services/web3.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -6,4 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
+  private web3Serv: any;
+
+  constructor(web3: Web3Service){
+    this.web3Serv = web3;
+  }
+
+  login(){
+    this.web3Serv.login();
+  }
 }
