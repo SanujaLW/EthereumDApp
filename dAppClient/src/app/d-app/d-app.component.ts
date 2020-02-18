@@ -10,9 +10,8 @@ import { Router } from '@angular/router';
 export class DAppComponent implements OnInit {
 
   private web3Serv: any;
-  private router: Router;
   
-  constructor(web3:Web3Service, router: Router) {
+  constructor(public web3:Web3Service, public router: Router) {
     this.web3Serv = web3;
     this.router = router;
    }

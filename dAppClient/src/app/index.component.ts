@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Web3Service } from './d-app/services/web3.service';
 import { Router } from '@angular/router';
+import { UportService } from './d-app/services/uport.service';
 
 @Component({
   selector: 'app-index',
@@ -8,13 +9,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  private web3Serv: any;
 
-  constructor(web3: Web3Service){
-    this.web3Serv = web3;
+  constructor(public web3: Web3Service, public uport: UportService, public router: Router){
   }
 
   login(){
-    this.web3Serv.login();
+    this.web3.login();
+  }
+
+  ngAfterViewInit(){
+    if(this.uport.isOnboard()){
+      this.router.navigate(['/dApp']);
+    }
   }
 }

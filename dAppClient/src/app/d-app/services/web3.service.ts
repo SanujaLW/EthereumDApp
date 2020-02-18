@@ -9,10 +9,8 @@ import { UportService } from './uport.service';
 export class Web3Service {
 
   private web3: any;
-  private uport: any;
 
-  constructor(uportServ: UportService) { 
-    this.uport = uportServ;
+  constructor(public uport: UportService) { 
     this.init(this.uport.getConnection().getProvider()).then((result)=>{
       if(result === false){
         console.log("No wallet detected");
@@ -41,7 +39,7 @@ export class Web3Service {
   }
 
   logout(){
-    this.uport.getConnection().logout();
+    this.uport.logout();
   }
 
   login(){
