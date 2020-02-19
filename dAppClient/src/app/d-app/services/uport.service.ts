@@ -13,7 +13,7 @@ export class UportService {
   constructor(public router: Router) {
     const Connect = (window as any).uportconnect;
     this._uport = new Connect('EthereumDApp', {
-      network: "ropsten"
+      network: "rinkeby"
     })
 
     this._uport.onResponse('disclosureReq').then(res => {
