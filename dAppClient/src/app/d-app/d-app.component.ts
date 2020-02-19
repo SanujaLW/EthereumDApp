@@ -9,10 +9,7 @@ import { Router } from '@angular/router';
 })
 export class DAppComponent implements OnInit {
 
-  private web3Serv: any;
-  
   constructor(public web3:Web3Service, public router: Router) {
-    this.web3Serv = web3;
     this.router = router;
    }
 
@@ -20,7 +17,7 @@ export class DAppComponent implements OnInit {
   }
 
   logout(){
-    this.web3Serv.logout();
+    this.web3.logout();
     this.router.navigate(['']);
   }
 

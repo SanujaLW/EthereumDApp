@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Web3Service } from './d-app/services/web3.service';
 import { Router } from '@angular/router';
-import { UportService } from './d-app/services/uport.service';
 
 @Component({
   selector: 'app-index',
@@ -10,7 +9,7 @@ import { UportService } from './d-app/services/uport.service';
 })
 export class IndexComponent {
 
-  constructor(public web3: Web3Service, public uport: UportService, public router: Router){
+  constructor(public web3: Web3Service, public router: Router){
   }
 
   login(){
@@ -18,7 +17,7 @@ export class IndexComponent {
   }
 
   ngAfterViewInit(){
-    if(this.uport.isOnboard()){
+    if(this.web3.uport.isOnboard()){
       this.router.navigate(['/dApp']);
     }
   }

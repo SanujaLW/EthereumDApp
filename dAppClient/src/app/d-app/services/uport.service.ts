@@ -17,8 +17,8 @@ export class UportService {
     })
 
     this._uport.onResponse('disclosureReq').then(res => {
-      const did = res.payload.did
-      const verified = res.payload.verified
+      const did = res.payload.did;
+      const verified = res.payload.verified;
       this._did = did;
       this._login = verified;
       localStorage.setItem('uPortUser', this._did);
@@ -32,7 +32,7 @@ export class UportService {
 
   requestLogin(){
     const reqObj = { requested: ['name'],
-                  notifications: true }
+                  notifications: true };
     this._uport.requestDisclosure(reqObj);
   }
 
@@ -53,7 +53,6 @@ export class UportService {
 
   isOnboard(){
     let user = localStorage.getItem('uPortUser');
-    console.log(user);
     return user !== null;
   }
 }
