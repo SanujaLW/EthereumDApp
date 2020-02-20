@@ -23,11 +23,27 @@ export class NumberGetSetComponent implements OnInit {
     });
   }
 
-  setValue(){
-    let newValue = prompt("Enter new value");
-    this.numberGetSetService.setValue(newValue).then(tnxHash =>{
-      console.log(tnxHash + " successfull");
-    });
+  async setValue(){
+    let allowed = await this.numberGetSetService.isAdmin();
+    if(allowed !== undefined){
+      if(allowed){
+        let newValue = prompt("Enter new value");
+        this.numberGetSetService.setValue(newValue).then(tnx =>{
+          if(tnx.error){
+            alert("Transacton unsuccessfull. \nCause: " + tnx.error);
+          }
+          else{
+            alert("Transacton successfull. \nHash: " + tnx.transactionHash);
+          }
+        });
+      }
+      else{
+        alert("You are not authorized to perform this action. Please contact admin");
+      }
+    }
+    else{
+      alert("Unable to check permission");
+    }
   }
 
 }

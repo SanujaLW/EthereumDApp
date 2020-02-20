@@ -11,9 +11,10 @@ export class NumberGetSetService {
   private name;
   private contract;
   private account;
+  private admin;
 
   constructor(public web3: Web3Service) { 
-    this.address = '0x5501BbB14c154A8Bf1dc446495A1E30679c4cdBD';
+    this.address = '0xb10b3b4f39aAe9638c47868b3B11A1dDB4FB095f';
     this.name = 'NumberGetSet';
     this.abi = [
       {
@@ -119,6 +120,25 @@ export class NumberGetSetService {
             "type": "address"
           }
         ],
+        "name": "isAdmin",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "addr",
+            "type": "address"
+          }
+        ],
         "name": "isApproved",
         "outputs": [
           {
@@ -153,7 +173,20 @@ export class NumberGetSetService {
     }
   }
 
+  private checkAdmin(){
+    return this.contract.methods.isAdmin(this.account).call();
+  }
 
-
-
+  async isAdmin(){
+    if(this.admin !== undefined){
+      return this.admin;
+    }
+    else{
+      if(this.account !== undefined && this.contract !== undefined){
+        this.admin = await this.checkAdmin();
+        return this.admin;
+      }
+    }
+    return undefined;
+  }
 }
