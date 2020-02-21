@@ -1,5 +1,4 @@
-import { Web3Service } from './../services/web3.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NumberGetSetService } from '../services/contracts/number-get-set.service';
 
 @Component({
@@ -11,8 +10,12 @@ export class NumberGetSetComponent implements OnInit {
 
   public value: any;
   public admin;
+  @ViewChild('usersModal') usersModal : ElementRef; 
 
   constructor(public numberGetSetService: NumberGetSetService) { 
+    this.numberGetSetService.isAdmin().then((value)=>{
+      this.admin = value;
+    });
   }
 
   ngOnInit(): void {
