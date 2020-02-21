@@ -11,7 +11,6 @@ export class NumberGetSetService {
   private name;
   private contract;
   private account;
-  private admin;
 
   constructor(public web3: Web3Service) { 
     this.address = '0xC69411EaA49dD9DB2bD59C2e40F6f29fb322CB82';
@@ -192,20 +191,8 @@ export class NumberGetSetService {
     }
   }
 
-  private checkAdmin(){
-    return this.contract.methods.isAdmin(this.account).call();
-  }
-
   async isAdmin(){
-    if(this.admin !== undefined){
-      return this.admin;
-    }
-    else{
-      if(this.account !== undefined && this.contract !== undefined){
-        this.admin = await this.checkAdmin();
-        return this.admin;
-      }
-    }
-    return undefined;
+    let admin = await this.contract.methods.isAdmin(this.account).call();
+    return admin;
   }
 }

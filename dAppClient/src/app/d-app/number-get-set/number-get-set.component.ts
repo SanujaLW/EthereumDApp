@@ -10,6 +10,7 @@ import { NumberGetSetService } from '../services/contracts/number-get-set.servic
 export class NumberGetSetComponent implements OnInit {
 
   public value: any;
+  public admin;
 
   constructor(public numberGetSetService: NumberGetSetService) { 
   }
@@ -24,26 +25,22 @@ export class NumberGetSetComponent implements OnInit {
   }
 
   async setValue(){
-    let allowed = await this.numberGetSetService.isAdmin();
-    if(allowed !== undefined){
-      if(allowed){
-        let newValue = prompt("Enter new value");
-        this.numberGetSetService.setValue(newValue).then(tnx =>{
-          if(tnx.error){
-            alert("Transacton unsuccessfull. \nCause: " + tnx.error);
-          }
-          else{
-            alert("Transacton successfull. \nHash: " + tnx.transactionHash);
-          }
-        });
-      }
-      else{
-        alert("You are not authorized to perform this action. Please contact admin");
-      }
+    if(this.admin === undefined){
+      this.admin = await this.numberGetSetService.isAdmin();
+    }
+    if(this.admin === true){
+      let newValue = prompt("Enter new value");
+      this.numberGetSetService.setValue(newValue).then(tnx =>{
+        if(tnx.error){
+          alert("Transacton unsuccessfull. \nCause: " + tnx.error);
+        }
+        else{
+          alert("Transacton successfull. \nHash: " + tnx.transactionHash);
+        }
+      });
     }
     else{
-      alert("Unable to check permission");
+      alert("You are not authorized to perform this action. Please contact admin");
     }
   }
-
 }
