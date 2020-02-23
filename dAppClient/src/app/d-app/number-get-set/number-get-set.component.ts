@@ -35,10 +35,10 @@ export class NumberGetSetComponent implements OnInit {
       let newValue = prompt("Enter new value");
       this.numberGetSetService.setValue(newValue).then(tnx =>{
         if(tnx.error){
-          alert("Transacton unsuccessfull. \nCause: " + tnx.error);
+          alert("Transacton unsuccessful. \nCause: " + tnx.error);
         }
         else{
-          alert("Transacton successfull. \nHash: " + tnx.transactionHash);
+          alert("Transacton successful. \nHash: " + tnx.transactionHash);
         }
       });
     }

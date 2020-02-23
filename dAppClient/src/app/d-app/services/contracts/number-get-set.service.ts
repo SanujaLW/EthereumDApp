@@ -195,4 +195,12 @@ export class NumberGetSetService {
     let admin = await this.contract.methods.isAdmin(this.account).call();
     return admin;
   }
+
+  getPending(){
+    return this.contract.methods.getLogged().call();
+  }
+
+  getApproved(){
+    return this.contract.methods.getApproved().call();
+  }
 }

@@ -1,1 +1,4 @@
-<p>admin works!</p>
+<div class="d-flex flex-column">
+    <h4 *ngFor="let approvedAddr of approved">{{approvedAddr}}</h4>
+    <button class="btn btn-warning" (click)='load()'>Load</button>
+</div>
