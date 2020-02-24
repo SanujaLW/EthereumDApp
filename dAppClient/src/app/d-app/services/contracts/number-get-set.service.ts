@@ -13,14 +13,9 @@ export class NumberGetSetService {
   private account;
 
   constructor(public web3: Web3Service) { 
-    this.address = '0xC69411EaA49dD9DB2bD59C2e40F6f29fb322CB82';
+    this.address = '0xaa42ad8fa2518E7cC9436df3cD61EB5e83b6360f';
     this.name = 'NumberGetSet';
     this.abi = [
-      {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-      },
       {
         "inputs": [
           {
@@ -39,6 +34,62 @@ export class NumberGetSetService {
         ],
         "stateMutability": "nonpayable",
         "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "log",
+        "outputs": [
+          {
+            "internalType": "int256",
+            "name": "",
+            "type": "int256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "newAdmin",
+            "type": "address"
+          }
+        ],
+        "name": "setAdmin",
+        "outputs": [
+          {
+            "internalType": "int256",
+            "name": "",
+            "type": "int256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "newValue",
+            "type": "uint256"
+          }
+        ],
+        "name": "setValue",
+        "outputs": [
+          {
+            "internalType": "int256",
+            "name": "",
+            "type": "int256"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
       },
       {
         "inputs": [],
@@ -118,89 +169,118 @@ export class NumberGetSetService {
         "type": "function"
       },
       {
-        "inputs": [],
-        "name": "log",
-        "outputs": [
-          {
-            "internalType": "int256",
-            "name": "",
-            "type": "int256"
-          }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
         "inputs": [
           {
             "internalType": "address",
-            "name": "newAdmin",
+            "name": "addr",
             "type": "address"
           }
         ],
-        "name": "setAdmin",
+        "name": "isPending",
         "outputs": [
           {
-            "internalType": "int256",
+            "internalType": "bool",
             "name": "",
-            "type": "int256"
+            "type": "bool"
           }
         ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "newValue",
-            "type": "uint256"
-          }
-        ],
-        "name": "setValue",
-        "outputs": [
-          {
-            "internalType": "int256",
-            "name": "",
-            "type": "int256"
-          }
-        ],
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
       }
     ];
     this.contract = web3.getContract({name: this.name,address: this.address,abi: this.abi});
-    web3.getAddresses().then(data=>{
-      if(data !== undefined){
-        this.account = data[0];
+    this.setAccount().then((result)=>{
+      if(!result){
+        console.log("No account detected");
       }
     });
   }
 
-  getValue(){
-    if(this.contract !== undefined){
-      return this.contract.methods.getValue().call();
+  async setAccount(){
+    let accounts = await this.web3.getAddresses();
+    if(accounts === undefined){
+      return false;
+    }
+    else{
+      this.account = accounts[0];
+      return true;
     }
   }
 
-  setValue(newValue){
-    if(this.account !== undefined && this.contract !== undefined){
-      if(newValue){
-        return this.contract.methods.setValue(newValue).send({from: this.account});
-      }
+  getValue(){
+    if(this.contract !== undefined){
+      return this.contract.methods.getValue().call({from: this.account});
+    }
+  }
+
+  async setValue(newValue){
+    let canPerform = await this.checkSetup();
+    if(newValue && canPerform){
+      return this.contract.methods.setValue(newValue).send({from: this.account});
     }
   }
 
   async isAdmin(){
-    let admin = await this.contract.methods.isAdmin(this.account).call();
-    return admin;
+    let canPerform = await this.checkSetup();
+    if(canPerform){
+      let admin = await this.contract.methods.isAdmin(this.account).call({from: this.account});
+      return admin;
+    }
   }
 
-  getPending(){
-    return this.contract.methods.getLogged().call();
+  async isApproved(){
+    let canPerform = await this.checkSetup();
+    if(canPerform){
+      return this.contract.methods.isApproved(this.account).call({from: this.account});
+    }
   }
 
-  getApproved(){
-    return this.contract.methods.getApproved().call();
+  async isPending(){
+    let canPerform = await this.checkSetup();
+    if(canPerform){
+      return this.contract.methods.isPending(this.account).call({from: this.account});
+    }
+  }
+
+  async getPending(){
+    let canPerform = await this.checkSetup();
+    if(canPerform){
+      return this.contract.methods.getLogged().call({from: this.account});
+    }
+  }
+
+  async getApproved(){
+    let canPerform = await this.checkSetup();
+    if(canPerform){
+      return this.contract.methods.getApproved().call({from: this.account});
+    }
+  }
+
+  async logUser(){
+    let canPerform = await this.checkSetup();
+    if(canPerform){
+      return this.contract.methods.log().send({from: this.account});
+    }
+  }
+
+  async approveUsers(users){
+    let canPerform = await this.checkSetup();
+    if(canPerform){
+      return this.contract.methods.approve(users).send({from: this.account});
+    }
+  }
+
+  private async checkSetup(){
+    if(this.account === undefined){
+      let result = await this.setAccount();
+      if(!result){
+        console.log("No account detected");
+        return false;
+      }
+    }else if(this.contract === undefined){
+      console.log("Invalid contract configuration");
+      return false;
+    }
+    return true;
   }
 }

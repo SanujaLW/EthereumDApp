@@ -3,7 +3,7 @@
     <h4>Current value: {{value}}</h4>
     <button class="btn btn-success" (click)='getValue()'>Get</button>
     <button class="btn btn-success" (click)='setValue()'>Set</button>
-    <button class="btn btn-link" data-toggle="modal" data-target="#usersModal">Admin</button>
+    <button class="btn btn-link" data-toggle="modal" data-target="#usersModal" (click)='checkAdmin()'>Admin</button>
 </div>
 
 <div #usersModal class="modal fade" id="usersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
