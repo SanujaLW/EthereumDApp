@@ -1,0 +1,17 @@
+<div class="container d-flex flex-column align-items-center mt-5">
+    <button class="btn btn-success mb-2" (click)='logout()'>Logout</button>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="smartContractsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Smart Contracts
+        </button>
+        <div class="dropdown-menu" aria-labelledby="smartContractsDropdown">
+          <a class="dropdown-item" data-toggle="tab" data-target="#numberGetSet">Number Get Set</a>
+        </div>
+    </div>
+
+    <div class="tab-content mt-5">
+        <div class="tab-pane active" id="numberGetSet">
+          <app-number-get-set></app-number-get-set>
+        </div>
+      </div>
+</div>

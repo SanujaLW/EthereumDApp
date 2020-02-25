@@ -1,0 +1,6 @@
+<div class="d-flex flex-column">
+    <div class="user" #unApprovedUser  *ngFor="let pendingAddr of pending" (click)='select(unApprovedUser, pendingAddr)'>
+        <label>{{pendingAddr}}</label>
+    </div>
+    <button class="btn btn-warning" (click)='approveSelected()'>Approve selected</button>
+</div>

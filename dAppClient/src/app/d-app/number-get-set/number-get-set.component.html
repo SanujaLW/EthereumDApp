@@ -1,0 +1,29 @@
+<div class="container d-flex flex-column aling-items-center">
+    <h2>Number Get Set</h2>
+    <h4>Current value: {{value}}</h4>
+    <button class="btn btn-success" (click)='getValue()'>Get</button>
+    <button class="btn btn-success" (click)='setValue()'>Set</button>
+    <button class="btn btn-link" data-toggle="modal" data-target="#usersModal" (click)='checkAdmin()'>Admin</button>
+</div>
+
+<div #usersModal class="modal fade" id="usersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Approve users</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <app-admin *ngIf='admin; else noAdmin'></app-admin>
+            <ng-template #noAdmin>
+                <p>You need admin access</p>
+            </ng-template>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div >
